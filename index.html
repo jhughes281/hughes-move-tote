@@ -15,11 +15,11 @@
   <meta property="og:title" content="Titan Move &amp; Tote Co. | Box Truck Moving &amp; Reusable Tote Rentals">
   <meta property="og:description" content="Box truck moving crews and reusable stackable tote rentals for local moves. Flat-rate tote packages, licensed carriers, drop-off and pickup within a 45-mile radius.">
   <meta property="og:url" content="https://jhughes281.github.io/titan-move-tote/">
-  <meta property="og:image" content="https://jhughes281.github.io/titan-move-tote/assets/moving-tote.png">
+  <meta property="og:image" content="https://jhughes281.github.io/titan-move-tote/assets/tote-stackable.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Titan Move &amp; Tote Co.">
   <meta name="twitter:description" content="Box truck moving crews and reusable stackable tote rentals for local moves. Flat-rate tote packages, licensed carriers, drop-off and pickup within a 45-mile radius.">
-  <meta name="twitter:image" content="https://jhughes281.github.io/titan-move-tote/assets/moving-tote.png">
+  <meta name="twitter:image" content="https://jhughes281.github.io/titan-move-tote/assets/tote-stackable.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
@@ -203,7 +203,7 @@
           </h1>
 
           <p class="text-gray-300 text-lg sm:text-xl font-normal max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            We operate <strong class="text-white font-semibold">two 26ft &amp; 16ft box trucks</strong> with seasoned moving crews, and we lease out <strong class="text-white font-semibold">rugged stackable moving totes</strong> plus heavy-duty wardrobe bags. Crush-proof, waterproof, and sanitized.
+            We operate <strong class="text-white font-semibold">two 26ft &amp; 16ft box trucks</strong> with seasoned moving crews, and we lease out <strong class="text-white font-semibold">rugged stackable moving totes</strong> plus zip-top clothes bags and wardrobe boxes. Crush-proof, waterproof, and sanitized.
           </p>
 
           <div class="p-4 rounded-xl bg-gray-900/90 border border-yellow-500/30 text-sm flex items-start gap-3 text-left max-w-xl mx-auto lg:mx-0">
@@ -250,57 +250,56 @@
         <div class="lg:col-span-5">
           <div class="relative bg-gradient-to-b from-gray-900 to-brand-card rounded-2xl p-6 border-2 border-yellow-500/40 shadow-2xl glow-yellow group">
             
-            <!-- Reference Header Stencil Style -->
+            <!-- Gear Header (driven by the switcher below) -->
             <div class="text-center pb-4 border-b border-gray-800">
-              <span class="text-xs font-mono text-brand-yellow tracking-widest uppercase font-bold">COMMERCIAL HARDWARE SPEC</span>
-              <h2 class="font-oswald text-2xl sm:text-3xl font-black tracking-wider text-white uppercase mt-1">
-                INDUSTRIAL GRADE STORAGE TOTE
+              <span id="gearKicker" class="text-xs font-mono text-brand-yellow tracking-widest uppercase font-bold">COMMERCIAL HARDWARE SPEC</span>
+              <h2 id="gearTitle" class="font-oswald text-2xl sm:text-3xl font-black tracking-wider text-white uppercase mt-1">
+                STACKABLE MOVING TOTE
               </h2>
             </div>
 
-            <!-- Image Container with Provided Reference Asset -->
+            <!-- Photo of the actual rental unit -->
             <div class="relative my-4 flex items-center justify-center bg-gray-950/80 rounded-xl p-4 border border-gray-800 min-h-[300px]">
-              
-              <!-- Real Embedded Reference Asset Image -->
-              <img 
+
+              <img
                 id="mainToteImage"
-                src="assets/moving-tote.png" 
-                alt="Industrial Grade Storage Tote - Heavy Duty Moving Tote Box" 
+                src="assets/tote-stackable.png"
+                alt="Black stackable moving tote with a yellow snap-on lid"
                 class="w-full max-h-[320px] object-contain drop-shadow-2xl transition-all duration-300"
               />
 
               <!-- Floating Badges -->
               <div class="absolute top-3 left-3 bg-brand-yellow text-black font-tech font-bold text-xs px-2.5 py-1 rounded shadow-md uppercase">
-                <i class="fa-solid fa-lock mr-1"></i> Lockable Lid
+                <i id="gearBadgeIcon" class="fa-solid fa-layer-group mr-1"></i> <span id="gearBadgeText">Snap-On Lid</span>
               </div>
-              <div class="absolute top-3 right-3 bg-black/90 text-brand-yellow border border-brand-yellow font-mono text-xs px-2 py-1 rounded font-bold">
+              <div id="gearTag" class="absolute top-3 right-3 bg-black/90 text-brand-yellow border border-brand-yellow font-mono text-xs px-2 py-1 rounded font-bold">
                 27-GALLON
               </div>
             </div>
 
-            <!-- Interactive Color Switcher / Thumbnails (Mimicking screenshot UI controls) -->
+            <!-- Real gear switcher -->
             <div class="space-y-3">
               <div class="flex items-center justify-between text-xs text-gray-400 font-mono">
-                <span>AVAILABLE LID COLORWAYS:</span>
-                <span id="selectedLidText" class="text-brand-yellow font-bold">Hazard Yellow (Standard)</span>
+                <span>OUR RENTAL GEAR:</span>
+                <span id="selectedLidText" class="text-brand-yellow font-bold">Everything except clothes</span>
               </div>
 
               <div class="grid grid-cols-4 gap-2">
-                <button onclick="changeToteColor('yellow', 'Hazard Yellow (Standard)')" class="color-swatch active border-2 border-brand-yellow p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
+                <button onclick="showGear('tote', this)" class="color-swatch active border-2 border-brand-yellow p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
                   <span class="w-full h-3 rounded bg-brand-yellow mb-1"></span>
-                  <span class="text-[10px] font-bold text-gray-200 uppercase">Yellow</span>
+                  <span class="text-[10px] font-bold text-gray-200 uppercase">Tote</span>
                 </button>
-                <button onclick="changeToteColor('blue', 'Heavy Duty Blue')" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
-                  <span class="w-full h-3 rounded bg-blue-600 mb-1"></span>
-                  <span class="text-[10px] font-bold text-gray-200 uppercase">Blue</span>
+                <button onclick="showGear('green', this)" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
+                  <span class="w-full h-3 rounded bg-green-700 mb-1"></span>
+                  <span class="text-[10px] font-bold text-gray-200 uppercase">Green Bag</span>
                 </button>
-                <button onclick="changeToteColor('green', 'Eco-Line Green')" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
-                  <span class="w-full h-3 rounded bg-emerald-600 mb-1"></span>
-                  <span class="text-[10px] font-bold text-gray-200 uppercase">Green</span>
+                <button onclick="showGear('blue', this)" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
+                  <span class="w-full h-3 rounded bg-blue-700 mb-1"></span>
+                  <span class="text-[10px] font-bold text-gray-200 uppercase">Blue Bag</span>
                 </button>
-                <button onclick="changeToteColor('red', 'Fragile Safe Red')" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
-                  <span class="w-full h-3 rounded bg-red-600 mb-1"></span>
-                  <span class="text-[10px] font-bold text-gray-200 uppercase">Red</span>
+                <button onclick="showGear('wardrobe', this)" class="color-swatch border-2 border-transparent p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 flex flex-col items-center transition-all">
+                  <span class="w-full h-3 rounded bg-amber-700 mb-1"></span>
+                  <span class="text-[10px] font-bold text-gray-200 uppercase">Wardrobe</span>
                 </button>
               </div>
             </div>
@@ -335,8 +334,8 @@
         </div>
         <div class="pt-2 md:pt-0">
           <i class="fa-solid fa-shirt text-2xl text-brand-yellow mb-2"></i>
-          <h4 class="font-oswald text-lg uppercase text-white font-bold">Heavy-Duty Clothes Bags</h4>
-          <p class="text-xs text-gray-400">Garment bags with hanging loops</p>
+          <h4 class="font-oswald text-lg uppercase text-white font-bold">Clothes Bags &amp; Wardrobes</h4>
+          <p class="text-xs text-gray-400">Zip-top bags plus hanging wardrobe boxes</p>
         </div>
         <div class="pt-2 md:pt-0">
           <i class="fa-solid fa-map-location-dot text-2xl text-brand-yellow mb-2"></i>
@@ -448,22 +447,35 @@
               <span class="text-xs font-mono bg-gray-800 text-gray-300 px-2 py-1 rounded font-semibold">Lease or Buy</span>
             </div>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              Skip flimsy wardrobe boxes! Our heavy-duty 600D ripstop fabric tote bags fit entire closets of hanging clothes, bedding, coats, and bulky linens with rugged dual-zippers.
+              Clothes, bedding, coats and linens go in our oversized zip-top bags &mdash; green and blue, woven and tear-resistant, with an ID card window on the end so every bag lands in the right room. Hanging clothes ride in wardrobe boxes on a real bar, no folding.
             </p>
             <ul class="space-y-2.5 text-xs text-gray-300 font-medium">
               <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-brand-yellow"></i> Holds up to 30 hanging garments on hangers
+                <i class="fa-solid fa-check text-brand-yellow"></i> Wrap-around webbing handles, top and side
               </li>
               <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-brand-yellow"></i> Reinforced wrap-around webbing handles
+                <i class="fa-solid fa-check text-brand-yellow"></i> Full zip-around top opening
               </li>
               <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-brand-yellow"></i> Water-resistant, dust-proof &amp; anti-odor
+                <i class="fa-solid fa-check text-brand-yellow"></i> Clear ID window &mdash; label the room, not the bag
               </li>
               <li class="flex items-center gap-2">
                 <i class="fa-solid fa-check text-brand-yellow"></i> Folds flat for compact storage
               </li>
             </ul>
+
+            <!-- Photos of the actual bags -->
+            <div class="grid grid-cols-3 gap-2 mt-6">
+              <div class="bg-brand-black/70 rounded-lg p-2 border border-gray-800 flex items-center justify-center">
+                <img src="assets/clothes-bag-green.png" alt="Green woven clothes bag with webbing handles" class="max-h-20 w-full object-contain" loading="lazy">
+              </div>
+              <div class="bg-brand-black/70 rounded-lg p-2 border border-gray-800 flex items-center justify-center">
+                <img src="assets/clothes-bag-blue.png" alt="Blue woven clothes bag with webbing handles" class="max-h-20 w-full object-contain" loading="lazy">
+              </div>
+              <div class="bg-brand-black/70 rounded-lg p-2 border border-gray-800 flex items-center justify-center">
+                <img src="assets/wardrobe-box.png" alt="Cardboard wardrobe box with a hanging bar" class="max-h-20 w-full object-contain" loading="lazy">
+              </div>
+            </div>
           </div>
           <div class="mt-8 pt-6 border-t border-gray-800">
             <a href="#tote-calculator" class="text-brand-yellow font-oswald uppercase tracking-wider text-sm font-bold flex items-center justify-between group-hover:text-white transition-colors">
@@ -663,8 +675,8 @@
             <!-- Image with zoom overlay -->
             <div class="bg-brand-black/90 rounded-xl p-4 border border-gray-800 flex items-center justify-center relative group">
               <img 
-                src="assets/moving-tote.png" 
-                alt="Industrial Grade Storage Tote with Yellow Lid" 
+                src="assets/tote-stackable.png"
+                alt="Two black stackable moving totes with yellow lids, stacked one on the other"
                 class="w-full max-h-72 object-contain group-hover:scale-105 transition-transform duration-300"
               />
               <div class="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded text-[10px] text-gray-300 font-mono">
@@ -729,7 +741,7 @@
           </div>
           <h3 class="font-oswald text-2xl font-bold uppercase text-white mb-3">We Drop Off Clean Totes</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            We deliver the stackable industrial totes, rolling dollies, and heavy-duty clothes bags right to your current local home up to 1-2 weeks before your move.
+            We deliver the stackable totes, rolling dollies, clothes bags and wardrobe boxes right to your current local home up to 1-2 weeks before your move.
           </p>
           <div class="text-xs text-brand-yellow font-mono flex items-center gap-1.5 font-bold">
             <i class="fa-solid fa-truck-ramp-box"></i> FREE Local Delivery with 25+ Totes
@@ -757,7 +769,7 @@
           </div>
           <h3 class="font-oswald text-2xl font-bold uppercase text-white mb-3">We Pick Them Up When Done</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Take your time unpacking at your new location. Once you're finished, our truck swings by and retrieves all the nested empty crates and wardrobe bags.
+            Take your time unpacking at your new location. Once you're finished, our truck swings by and retrieves all the nested empty totes, bags and wardrobe boxes.
           </p>
           <div class="text-xs text-brand-yellow font-mono flex items-center gap-1.5 font-bold">
             <i class="fa-solid fa-trash-can-arrow-up"></i> Zero cardboard waste in the trash!
@@ -1137,7 +1149,7 @@
             <i class="fa-solid fa-chevron-down text-sm text-brand-yellow transition-transform duration-200"></i>
           </button>
           <div class="faq-content hidden px-5 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800/50 pt-3">
-            Our garment tote bags are constructed from 600D ballistic nylon with dual zipper sliders and heavy webbing handles. You simply pull a handful of closet hangers straight into the bag and zip it up! No awkward tall cardboard wardrobe boxes that take up entire truck walls.
+            The green and blue bags are oversized woven zip-top bags with webbing handles on the top and the sides, sized for folded clothes, bedding, coats and linens. Each one has a clear ID window on the end &mdash; write the room on a card and slide it in. Anything that needs to stay on its hanger goes in a wardrobe box instead, where it hangs on a bar and comes out ready for the closet.
           </div>
         </div>
 
@@ -1361,25 +1373,75 @@
     });
 
     // Color Swatch Switcher for Hero Tote
-    function changeToteColor(colorKey, labelName) {
-      document.getElementById('selectedLidText').textContent = labelName;
-      
-      const swatches = document.querySelectorAll('.color-swatch');
-      swatches.forEach(btn => {
-        btn.classList.remove('border-brand-yellow');
-        btn.classList.add('border-transparent');
-      });
+    // Real gear shown in the hero card — photos of the actual rental units
+    const GEAR = {
+      tote: {
+        kicker: 'COMMERCIAL HARDWARE SPEC',
+        title: 'STACKABLE MOVING TOTE',
+        img: 'assets/tote-stackable.png',
+        alt: 'Black stackable moving tote with a yellow snap-on lid',
+        badgeIcon: 'fa-layer-group',
+        badgeText: 'Snap-On Lid',
+        tag: '27-GALLON',
+        caption: 'Everything except clothes'
+      },
+      green: {
+        kicker: 'CLOTHES & SOFT GOODS',
+        title: 'GREEN CLOTHES BAG',
+        img: 'assets/clothes-bag-green.png',
+        alt: 'Green woven moving bag with webbing handles and an ID card window',
+        badgeIcon: 'fa-shirt',
+        badgeText: 'Zip Top',
+        tag: 'CLOTHES',
+        caption: 'Clothes, bedding & linens'
+      },
+      blue: {
+        kicker: 'CLOTHES & SOFT GOODS',
+        title: 'BLUE CLOTHES BAG',
+        img: 'assets/clothes-bag-blue.png',
+        alt: 'Blue woven moving bag with webbing handles and an ID card window',
+        badgeIcon: 'fa-shirt',
+        badgeText: 'Zip Top',
+        tag: 'CLOTHES',
+        caption: 'Clothes, bedding & linens'
+      },
+      wardrobe: {
+        kicker: 'HANGING CLOTHES',
+        title: 'WARDROBE BOX',
+        img: 'assets/wardrobe-box.png',
+        alt: 'Cardboard wardrobe box with a hanging bar and clothes on hangers',
+        badgeIcon: 'fa-hanger',
+        badgeText: 'Hanging Bar',
+        tag: 'ON HANGERS',
+        caption: 'Closet straight onto the bar'
+      }
+    };
 
-      // Highlight clicked swatch
-      event.currentTarget.classList.remove('border-transparent');
-      event.currentTarget.classList.add('border-brand-yellow');
+    function showGear(key, btn) {
+      const gear = GEAR[key];
+      if (!gear) return;
+
+      document.getElementById('gearKicker').textContent = gear.kicker;
+      document.getElementById('gearTitle').textContent = gear.title;
+      document.getElementById('gearTag').textContent = gear.tag;
+      document.getElementById('gearBadgeText').textContent = gear.badgeText;
+      document.getElementById('gearBadgeIcon').className = 'fa-solid ' + gear.badgeIcon + ' mr-1';
+      document.getElementById('selectedLidText').textContent = gear.caption;
+
+      document.querySelectorAll('.color-swatch').forEach(b => {
+        b.classList.remove('border-brand-yellow');
+        b.classList.add('border-transparent');
+      });
+      if (btn) {
+        btn.classList.remove('border-transparent');
+        btn.classList.add('border-brand-yellow');
+      }
 
       const img = document.getElementById('mainToteImage');
-      // Subtle pulse effect to indicate change
       img.style.transform = 'scale(0.96)';
-      setTimeout(() => {
-        img.style.transform = 'scale(1)';
-      }, 150);
+      img.src = gear.img;
+      img.alt = gear.alt;
+      setTimeout(() => { img.style.transform = 'scale(1)'; }, 150);
     }
 
     // Calculator State & Logic

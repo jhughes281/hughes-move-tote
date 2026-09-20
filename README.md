@@ -56,6 +56,11 @@ Everything below is invented sample copy, not real business data:
 - **"USDOT & State Licensed Carrier"** badge in the footer — only keep this once there is a real
   USDOT number; put the actual number next to it
 - **Pricing** in `#pricing` and the `#tote-calculator` rates — confirm every number
+- **Tote specs** — "27 gallon", "30.5 x 20.5 x 15 in", "400 lbs stack capacity", "$1.50/week" and
+  the "$4.00/bag per week" clothes-bag rate are all still generator-invented; measure and price
+  the real units
+- **Sanitizing claims** — "high-pressure thermal wash", "botanical sanitization",
+  "hospital-grade steam clean" describe a process nobody specified
 - **Footer legal links** (Terms, Privacy, Tote Rental Agreement) all point at `#`
 
 ### The booking form does not send anything
@@ -72,7 +77,14 @@ console. Fine for a demo; for a real launch, build the CSS once and ship a stati
 
 ## Assets
 
-`assets/moving-tote.png` — tote product image, pulled local from the original generator's
-CDN so the page doesn't depend on an outside host. **The tote in this image has a
-"YOUR LOGO" placeholder printed on its side** — swap it for a photo of a real tote (or one
-with the actual branding) before launch.
+Photos of the real equipment, supplied by the owner:
+
+| File | What it is | Used for |
+| --- | --- | --- |
+| `tote-stackable.png` | Black tote, yellow snap lid | Everything except clothes — hero + spec sheet + social image |
+| `clothes-bag-green.png` | Green woven zip-top bag | Clothes |
+| `clothes-bag-blue.png` | Blue woven zip-top bag | Clothes |
+| `wardrobe-box.png` | Cardboard wardrobe box, hanging bar | Clothes that stay on hangers |
+
+The hero card has a four-way switcher (`showGear()`) that swaps between them. These replaced
+a stock render that was hot-linked from the generator's CDN and had "YOUR LOGO" printed on it.
