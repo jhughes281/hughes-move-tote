@@ -308,7 +308,7 @@
             <div class="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-300">
               <span><i class="fa-solid fa-recycle text-emerald-400 mr-1"></i> 100% Recyclable PP</span>
               <span><i class="fa-solid fa-layer-group text-brand-yellow mr-1"></i> Interlocking Grid</span>
-              <span class="text-brand-yellow font-bold font-tech">FROM $1.50/WEEK</span>
+              <span class="text-brand-yellow font-bold font-tech">FROM $<span data-rate="toteWithMove"></span>/WEEK</span>
             </div>
 
           </div>
@@ -892,7 +892,7 @@
                 <div class="flex items-center justify-between mb-2">
                   <div class="flex items-center gap-2">
                     <i class="fa-solid fa-box text-brand-yellow"></i>
-                    <label for="toteCountInput" class="font-oswald text-lg font-bold uppercase text-white">Stackable Totes (27 Gal)</label>
+                    <label for="toteCountInput" class="font-oswald text-lg font-bold uppercase text-white">Stackable Totes</label>
                   </div>
                   <span id="toteCountDisplay" class="font-tech text-2xl font-bold text-brand-yellow">25 Totes</span>
                 </div>
@@ -911,7 +911,14 @@
                   <span>50</span>
                   <span>Max: 100+</span>
                 </div>
-                <p class="text-xs text-gray-400 mt-2">$2.00 / tote per week (Includes labels &amp; zip ties)</p>
+                <p class="text-xs text-gray-400 mt-2">
+                  <span class="text-white font-bold">$<span data-rate="toteRentalOnly"></span> / tote per week</span> &mdash; rental only.
+                  Any of the four sizes, same price.
+                </p>
+                <p class="text-[11px] text-emerald-400 mt-1">
+                  <i class="fa-solid fa-arrow-down"></i>
+                  Drops to $<span data-rate="toteWithMove"></span> / tote per week if you book the moving crew too.
+                </p>
               </div>
 
               <!-- Heavy Duty Clothes Bag Slider -->
@@ -1026,16 +1033,40 @@
 
             </div>
 
-            <!-- Truck + Totes Bundle Checkbox -->
-            <div class="p-4 rounded-xl bg-yellow-400/10 border border-brand-yellow/30 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <input type="checkbox" id="bundleTotesCheckbox" checked onchange="updateTruckPrice()" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer">
+            <!-- Add totes to the move at the lower bundled rate -->
+            <div class="p-4 sm:p-5 rounded-xl bg-yellow-400/10 border border-brand-yellow/30 space-y-4">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" id="bundleTotesCheckbox" checked onchange="updateTruckPrice()" class="w-5 h-5 mt-0.5 accent-yellow-400 rounded cursor-pointer shrink-0">
+                <span>
+                  <span class="font-oswald text-base font-bold text-white uppercase block">Add totes to this move</span>
+                  <span class="text-xs text-gray-300">
+                    $<span data-rate="toteWithMove"></span> / tote per week instead of
+                    $<span data-rate="toteRentalOnly"></span> &mdash; you save
+                    $<span data-rate="toteSaving"></span> per tote, per week.
+                  </span>
+                </span>
+              </label>
+
+              <div id="bundleToteControls" class="grid grid-cols-2 gap-4">
                 <div>
-                  <span class="font-oswald text-base font-bold text-white uppercase">Bundle 25 Stackable Totes + 4 Garment Bags</span>
-                  <p class="text-xs text-gray-300">Save 20% on tote rentals when booked with our box truck moving service!</p>
+                  <label for="bundleToteCount" class="block text-[11px] font-mono uppercase text-gray-400 mb-1.5 font-semibold">How many totes</label>
+                  <select id="bundleToteCount" onchange="updateTruckPrice()" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-white font-tech text-sm focus:border-brand-yellow focus:outline-none">
+                    <option value="15">15 totes</option>
+                    <option value="25" selected>25 totes</option>
+                    <option value="40">40 totes</option>
+                    <option value="60">60 totes</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="bundleToteWeeks" class="block text-[11px] font-mono uppercase text-gray-400 mb-1.5 font-semibold">For how long</label>
+                  <select id="bundleToteWeeks" onchange="updateTruckPrice()" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-white font-tech text-sm focus:border-brand-yellow focus:outline-none">
+                    <option value="1">1 week</option>
+                    <option value="2" selected>2 weeks</option>
+                    <option value="3">3 weeks</option>
+                    <option value="4">4 weeks</option>
+                  </select>
                 </div>
               </div>
-              <span class="text-brand-yellow font-tech font-bold text-xs uppercase hidden sm:inline-block">+20% OFF BUNDLE</span>
             </div>
 
           </div>
@@ -1051,6 +1082,7 @@
               <p class="text-[11px] text-emerald-400 font-mono mt-1">
                 <i class="fa-solid fa-check"></i> Free Local Drop-off &amp; Pick-up included
               </p>
+              <p id="calcCrossSell" class="text-[11px] text-brand-yellow font-mono mt-1 hidden"></p>
             </div>
 
             <button onclick="openBookingModal()" class="w-full md:w-auto bg-brand-yellow hover:bg-yellow-400 text-black px-8 py-4 rounded-xl font-oswald text-lg font-bold uppercase tracking-wider shadow-lg hover:shadow-yellow-400/20 transition-all flex items-center justify-center gap-3">
@@ -1070,82 +1102,67 @@
   <section id="pricing" class="py-20 bg-brand-dark border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-yellow bg-yellow-400/10 px-3 py-1 rounded-full border border-yellow-500/20">Transparent Rates</span>
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-yellow bg-yellow-400/10 px-3 py-1 rounded-full border border-yellow-500/20">Two Ways To Book</span>
         <h2 class="font-oswald text-3xl sm:text-5xl font-bold uppercase text-white tracking-wide mt-3">
-          POPULAR LOCAL TOTE BUNDLES
+          RENT THE TOTES, OR LET US MOVE YOU
         </h2>
         <p class="text-gray-400 text-sm sm:text-base mt-2">
-          Keep the totes for 2 full weeks. Need more time? It's only $0.50/tote per extra week!
+          Same totes either way. Booking the crew brings the tote rate down.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        
-        <!-- Tier 1 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all flex flex-col justify-between">
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+        <!-- Tier 1: totes only -->
+        <div class="bg-gray-900 border border-gray-700 rounded-2xl p-8 flex flex-col justify-between">
           <div>
-            <div class="font-oswald text-xl uppercase font-bold text-white mb-1">Studio / 1-Bed Pack</div>
-            <p class="text-xs text-gray-400 mb-6">Ideal for studio apartments or dorm relocations.</p>
-            <div class="font-tech text-4xl font-black text-brand-yellow mb-6">
-              $89 <span class="text-xs text-gray-400 font-mono font-normal">/ 2-Week Rental</span>
+            <div class="font-oswald text-xl uppercase font-bold text-white mb-1">Totes Only</div>
+            <p class="text-xs text-gray-400 mb-6">You do the move &mdash; yourself, a U-Haul, or another mover. We just supply the boxes that don't fall apart.</p>
+
+            <div class="font-tech text-5xl font-black text-white mb-1">
+              $<span data-rate="toteRentalOnly"></span>
             </div>
+            <div class="text-xs text-gray-400 font-mono mb-6">per tote, per week</div>
+
             <ul class="space-y-3 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-box text-brand-yellow"></i> <strong>15 Industrial 27-Gal Totes</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-shirt text-brand-yellow"></i> <strong>2 Heavy-Duty Clothes Bags</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-dolly text-brand-yellow"></i> 1 4-Wheel Heavy Mover Dolly</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-tag text-brand-yellow"></i> 15 Waterproof Color Labels</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-lock text-brand-yellow"></i> 30 Security Zip Ties</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-box text-brand-yellow mt-0.5"></i> Any of the four tote sizes, one price</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-shirt text-brand-yellow mt-0.5"></i> Clothes bags and wardrobe boxes available</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-truck-ramp-box text-brand-yellow mt-0.5"></i> We drop off before the move and collect after</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-dolly text-brand-yellow mt-0.5"></i> Dolly, labels and zip ties included</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-brand-yellow mt-0.5"></i> Local radius only</li>
             </ul>
           </div>
-          <button onclick="applyPreset(15, 2, '2-Weeks'); scrollToCalculator();" class="mt-8 w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-oswald text-sm font-bold uppercase rounded transition-colors">
-            Select 1-Bed Pack
+          <button onclick="switchCalcTab('totes'); scrollToCalculator();" class="mt-8 w-full py-3.5 bg-gray-800 hover:bg-gray-700 text-white font-oswald text-sm font-bold uppercase rounded transition-colors">
+            Price Up A Tote Rental
           </button>
         </div>
 
-        <!-- Tier 2 (Featured) -->
-        <div class="bg-gradient-to-b from-gray-900 to-brand-card border-2 border-brand-yellow rounded-2xl p-8 relative flex flex-col justify-between shadow-2xl">
-          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-yellow text-black font-tech font-extrabold text-xs px-4 py-1 rounded-full uppercase tracking-wider shadow">
-            BEST VALUE FOR HOMES
+        <!-- Tier 2: moving service, totes at the lower rate -->
+        <div class="bg-brand-card border-2 border-brand-yellow rounded-2xl p-8 relative flex flex-col justify-between shadow-2xl">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-yellow text-black font-tech font-extrabold text-xs px-4 py-1 rounded-full uppercase tracking-wider shadow whitespace-nowrap">
+            Cheapest Totes
           </div>
           <div>
-            <div class="font-oswald text-xl uppercase font-bold text-white mb-1">2-3 Bedroom House Pack</div>
-            <p class="text-xs text-gray-300 mb-6">The sweet spot for medium homes and townhomes.</p>
-            <div class="font-tech text-4xl font-black text-brand-yellow mb-6">
-              $149 <span class="text-xs text-gray-400 font-mono font-normal">/ 2-Week Rental</span>
+            <div class="font-oswald text-xl uppercase font-bold text-white mb-1">Moving Service + Totes</div>
+            <p class="text-xs text-gray-300 mb-6">Our crew and box truck do the move. Add totes at the lower rate and pack ahead at your own pace.</p>
+
+            <div class="flex items-baseline gap-3 mb-1">
+              <span class="font-tech text-5xl font-black text-brand-yellow">$<span data-rate="toteWithMove"></span></span>
+              <span class="font-tech text-2xl font-bold text-gray-500 line-through">$<span data-rate="toteRentalOnly"></span></span>
             </div>
+            <div class="text-xs text-gray-300 font-mono mb-6">per tote, per week &mdash; plus the hourly move</div>
+
             <ul class="space-y-3 text-xs text-gray-200">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-box text-brand-yellow"></i> <strong>30 Industrial 27-Gal Totes</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-shirt text-brand-yellow"></i> <strong>4 Heavy-Duty Clothes Bags</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-dolly text-brand-yellow"></i> 2 4-Wheel Heavy Mover Dollies</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-tag text-brand-yellow"></i> 30 Waterproof Color Labels</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-lock text-brand-yellow"></i> 60 Security Zip Ties</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-truck text-emerald-400"></i> Free Local Delivery &amp; Pick-up</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-tags text-brand-yellow mt-0.5"></i> <strong>$<span data-rate="toteSaving"></span> off every tote, every week</strong></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-truck-moving text-brand-yellow mt-0.5"></i> 16ft or 26ft box truck with a trained crew</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-clock text-brand-yellow mt-0.5"></i> Move billed by the hour &mdash; price it in the calculator</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-boxes-packing text-brand-yellow mt-0.5"></i> Totes dropped off ahead so you pack on your schedule</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-couch text-brand-yellow mt-0.5"></i> Furniture pads and straps on the truck</li>
             </ul>
           </div>
-          <button onclick="applyPreset(30, 4, '2-Weeks'); scrollToCalculator();" class="mt-8 w-full py-3 bg-brand-yellow hover:bg-yellow-400 text-black font-oswald text-sm font-bold uppercase rounded shadow transition-colors">
-            Select 2-3 Bed Pack
-          </button>
-        </div>
-
-        <!-- Tier 3 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all flex flex-col justify-between">
-          <div>
-            <div class="font-oswald text-xl uppercase font-bold text-white mb-1">4-5 Bed Estate Pack</div>
-            <p class="text-xs text-gray-400 mb-6">Comprehensive pack for large family homes &amp; offices.</p>
-            <div class="font-tech text-4xl font-black text-brand-yellow mb-6">
-              $239 <span class="text-xs text-gray-400 font-mono font-normal">/ 2-Week Rental</span>
-            </div>
-            <ul class="space-y-3 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-box text-brand-yellow"></i> <strong>50 Industrial 27-Gal Totes</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-shirt text-brand-yellow"></i> <strong>8 Heavy-Duty Clothes Bags</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-dolly text-brand-yellow"></i> 3 4-Wheel Heavy Mover Dollies</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-tag text-brand-yellow"></i> 50 Waterproof Color Labels</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-lock text-brand-yellow"></i> 100 Security Zip Ties</li>
-            </ul>
-          </div>
-          <button onclick="applyPreset(50, 8, '2-Weeks'); scrollToCalculator();" class="mt-8 w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-oswald text-sm font-bold uppercase rounded transition-colors">
-            Select Estate Pack
+          <button onclick="switchCalcTab('truck'); scrollToCalculator();" class="mt-8 w-full py-3.5 bg-brand-yellow hover:bg-yellow-400 text-black font-oswald text-sm font-bold uppercase rounded shadow transition-colors">
+            Price Up A Full Move
           </button>
         </div>
 
@@ -1491,6 +1508,37 @@
       setTimeout(() => { img.style.transform = 'scale(1)'; }, 150);
     }
 
+    /* ------------------------------------------------------------------
+       RATES — single source of truth for every price on this page.
+       Change a number here and the copy, the tier cards and the calculator
+       all follow. Anything marked PLACEHOLDER still needs a real figure.
+       ------------------------------------------------------------------ */
+    const RATES = {
+      totePerWeek: {
+        rentalOnly: 2.50,   // totes without the moving service
+        withMove:   1.50    // totes booked together with the crew + truck
+      },
+      bagPerWeek:       4.00,              // PLACEHOLDER — clothes bags / wardrobe boxes
+      truckHourly:      { '26ft': 140, '16ft': 110 },  // PLACEHOLDER — hourly, includes 2 movers
+      extraMoverHourly: 45                 // PLACEHOLDER — per mover beyond 2, per hour
+    };
+
+    const money = n => (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
+
+    // Paint the rates into any element tagged with data-rate
+    function renderRates() {
+      const values = {
+        toteRentalOnly: money(RATES.totePerWeek.rentalOnly),
+        toteWithMove:   money(RATES.totePerWeek.withMove),
+        toteSaving:     money(RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove),
+        bagPerWeek:     money(RATES.bagPerWeek)
+      };
+      document.querySelectorAll('[data-rate]').forEach(el => {
+        const v = values[el.dataset.rate];
+        if (v !== undefined) el.textContent = v;
+      });
+    }
+
     // Calculator State & Logic
     let currentTab = 'totes'; // 'totes' or 'truck'
 
@@ -1547,16 +1595,23 @@
       document.getElementById('toteCountDisplay').textContent = `${totes} Totes`;
       document.getElementById('bagCountDisplay').textContent = `${bags} Bags`;
 
-      // Rates: $2/tote/week for first 2 weeks, then $1.50/week after. Bags: $4/bag/week.
-      const toteRatePerWeek = weeks > 2 ? 1.75 : 2.00;
-      const bagRatePerWeek = 4.00;
+      // Rental-only tier: the higher tote rate applies.
+      const subtotal = (totes * RATES.totePerWeek.rentalOnly * weeks)
+                     + (bags  * RATES.bagPerWeek            * weeks);
 
-      const totalTotes = totes * toteRatePerWeek * weeks;
-      const totalBags = bags * bagRatePerWeek * weeks;
-      const subtotal = totalTotes + totalBags;
+      // What the same totes would cost if they booked the move as well.
+      const couldSave = totes * (RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove) * weeks;
 
       document.getElementById('calculatedTotalDisplay').textContent = `$${subtotal.toFixed(2)}`;
-      document.getElementById('calculatedSubtitleDisplay').textContent = `for ${weeks} week${weeks > 1 ? 's' : ''} rental (${totes} Totes, ${bags} Bags)`;
+      document.getElementById('calculatedSubtitleDisplay').textContent =
+        `for ${weeks} week${weeks > 1 ? 's' : ''} (${totes} totes, ${bags} bags) — rental only`;
+
+      const note = document.getElementById('calcCrossSell');
+      if (note) {
+        note.innerHTML = `<i class="fa-solid fa-arrow-down"></i> Book the moving crew too and these totes drop to `
+          + `$${(totes * RATES.totePerWeek.withMove * weeks).toFixed(2)} — you'd save $${couldSave.toFixed(2)}.`;
+        note.classList.remove('hidden');
+      }
     }
 
     function updateTruckPrice() {
@@ -1564,21 +1619,36 @@
       const movers = parseInt(document.getElementById('crewSizeSelect').value);
       const hours = parseInt(document.getElementById('moveHoursSelect').value);
       const bundleTotes = document.getElementById('bundleTotesCheckbox').checked;
+      const bundleCount = parseInt(document.getElementById('bundleToteCount').value);
+      const bundleWeeks = parseInt(document.getElementById('bundleToteWeeks').value);
 
-      // Base truck hourly
-      let hourlyRate = truckType === '26ft' ? 140 : 110;
-      
-      // Extra movers beyond 2
-      if (movers === 3) hourlyRate += 45;
-      if (movers === 4) hourlyRate += 90;
+      let hourlyRate = RATES.truckHourly[truckType];
+      if (movers > 2) hourlyRate += (movers - 2) * RATES.extraMoverHourly;
 
-      let moveCost = hourlyRate * hours;
-      let toteAddon = bundleTotes ? 95 : 0; // Discounted tote combo
+      const moveCost  = hourlyRate * hours;
+      const toteAddon = bundleTotes ? bundleCount * RATES.totePerWeek.withMove * bundleWeeks : 0;
+      const grandTotal = moveCost + toteAddon;
 
-      let grandTotal = moveCost + toteAddon;
+      document.getElementById('bundleToteControls').classList.toggle('opacity-40', !bundleTotes);
+      document.getElementById('bundleToteCount').disabled = !bundleTotes;
+      document.getElementById('bundleToteWeeks').disabled = !bundleTotes;
 
       document.getElementById('calculatedTotalDisplay').textContent = `$${grandTotal.toFixed(2)}`;
-      document.getElementById('calculatedSubtitleDisplay').textContent = `for ${hours} hrs (${truckType.toUpperCase()} + ${movers} Movers${bundleTotes ? ' + 25 Totes' : ''})`;
+      document.getElementById('calculatedSubtitleDisplay').textContent =
+        `for ${hours} hrs (${truckType.toUpperCase()}, ${movers} movers)`
+        + (bundleTotes ? ` + ${bundleCount} totes for ${bundleWeeks} week${bundleWeeks > 1 ? 's' : ''}` : '');
+
+      const note = document.getElementById('calcCrossSell');
+      if (note) {
+        if (bundleTotes) {
+          const saved = bundleCount * (RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove) * bundleWeeks;
+          note.innerHTML = `<i class="fa-solid fa-check"></i> Totes at $${money(RATES.totePerWeek.withMove)}/week instead of `
+            + `$${money(RATES.totePerWeek.rentalOnly)} — $${saved.toFixed(2)} saved on this booking.`;
+          note.classList.remove('hidden');
+        } else {
+          note.classList.add('hidden');
+        }
+      }
     }
 
     function scrollToCalculator() {
@@ -1635,7 +1705,8 @@
       }
     }
 
-    // Run Initial Price Calculation
+    // Paint rates into the copy, then run the first estimate
+    renderRates();
     updateTotePrice();
   </script>
 </body>

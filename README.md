@@ -15,8 +15,8 @@ Oswald / Chakra Petch type, yellow-on-near-black palette.
 | `#fleet` | Box truck lineup and capacity |
 | `#tote-rentals` | Tote specs, clothes-bag add-on (`#clothes-totes`) |
 | `#how-it-works` | Drop-off → pack → move → pickup steps |
-| `#tote-calculator` | Interactive estimator — tote count, bags, rental length |
-| `#pricing` | Flat-rate packages |
+| `#tote-calculator` | Two-tab estimator — tote rental, or full move with totes added |
+| `#pricing` | The two service tiers |
 | (FAQ) | Accordion |
 | (footer) | Service radius, hours, direct dispatch contact |
 
@@ -56,10 +56,10 @@ Everything below is invented sample copy, not real business data:
 - **"USDOT & State Licensed Carrier"** badge in the footer — only keep this once there is a real
   USDOT number; put the actual number next to it
 - **Pricing** in `#pricing` and the `#tote-calculator` rates — confirm every number
-- **Per-size pricing.** The totes come in four real sizes (below) but the calculator still
-  charges one flat `$1.50/tote/week` and the packages just say "25 Totes", "40 Totes". Either
-  price by size or say somewhere that the rate is the same whichever size you take.
-- **Clothes bag rate** `$4.00/bag per week` — still invented
+- **Hourly moving rates** — `$140/hr` (26ft), `$110/hr` (16ft), `+$45/hr` per extra mover are
+  all still invented. They drive the full-move estimate, so they are the most visible
+  remaining placeholder.
+- **Clothes bag / wardrobe box rate** `$4.00 per week` — still invented
 - **Sanitizing claims** — "high-pressure thermal wash", "botanical sanitization",
   "hospital-grade steam clean" describe a process nobody specified
 - **"Ideal for" lines** in the size table (books/kitchen/everyday/bedding) are my packing
@@ -77,6 +77,37 @@ or the toast is telling customers a reservation was made when it wasn't.
 
 `cdn.tailwindcss.com` compiles classes in the browser and logs a production warning to the
 console. Fine for a demo; for a real launch, build the CSS once and ship a static stylesheet.
+
+## Rates
+
+All prices come from one `RATES` object in the page script. `renderRates()` paints them into
+any element tagged `data-rate="..."`, and both calculator tabs read the same object — change a
+number in `RATES` and the tier cards, the body copy and the estimates all follow.
+
+```js
+const RATES = {
+  totePerWeek: { rentalOnly: 2.50, withMove: 1.50 },
+  bagPerWeek:       4.00,                           // PLACEHOLDER
+  truckHourly:      { '26ft': 140, '16ft': 110 },   // PLACEHOLDER
+  extraMoverHourly: 45                              // PLACEHOLDER
+};
+```
+
+**Real (owner-supplied):** totes are **$2.50/tote/week** on their own, **$1.50/tote/week** when
+booked with the moving crew. Same price whichever of the four sizes you take. Everything marked
+PLACEHOLDER still needs a real number.
+
+## The two tiers
+
+1. **Totes Only** — customer moves themselves, we drop off and collect. Totes at the higher rate.
+2. **Moving Service + Totes** — crew and box truck, billed hourly, totes at the lower rate.
+
+`#pricing` presents them as two cards; the calculator's two tabs price them. Each tab shows the
+other tier's number too, so the saving is visible either way: the rental tab says what the same
+totes would cost with a move booked, and the move tab shows what was saved.
+
+This replaced three invented flat packages ($89 / $149 / $239 for 15 / 30 / 50 totes) whose
+totals matched no per-tote rate, and a "20% off bundle" that was really a hardcoded $95.
 
 ## Tote sizes
 
