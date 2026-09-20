@@ -56,11 +56,14 @@ Everything below is invented sample copy, not real business data:
 - **"USDOT & State Licensed Carrier"** badge in the footer — only keep this once there is a real
   USDOT number; put the actual number next to it
 - **Pricing** in `#pricing` and the `#tote-calculator` rates — confirm every number
-- **Tote specs** — "27 gallon", "30.5 x 20.5 x 15 in", "400 lbs stack capacity", "$1.50/week" and
-  the "$4.00/bag per week" clothes-bag rate are all still generator-invented; measure and price
-  the real units
+- **Per-size pricing.** The totes come in four real sizes (below) but the calculator still
+  charges one flat `$1.50/tote/week` and the packages just say "25 Totes", "40 Totes". Either
+  price by size or say somewhere that the rate is the same whichever size you take.
+- **Clothes bag rate** `$4.00/bag per week` — still invented
 - **Sanitizing claims** — "high-pressure thermal wash", "botanical sanitization",
   "hospital-grade steam clean" describe a process nobody specified
+- **"Ideal for" lines** in the size table (books/kitchen/everyday/bedding) are my packing
+  suggestions, not something the owner specified — reword freely
 - **Footer legal links** (Terms, Privacy, Tote Rental Agreement) all point at `#`
 
 ### The booking form does not send anything
@@ -74,6 +77,19 @@ or the toast is telling customers a reservation was made when it wasn't.
 
 `cdn.tailwindcss.com` compiles classes in the browser and logs a production warning to the
 console. Fine for a demo; for a real launch, build the CSS once and ship a static stylesheet.
+
+## Tote sizes
+
+Real, owner-supplied. Metric is the source; inches and gallons are converted from it.
+
+| | Volume | Dimensions (L × W × H) |
+| --- | --- | --- |
+| Small | 25 L / 6.6 gal | 47 × 33 × 27 cm — 18.5 × 13 × 10.6 in |
+| Medium | 55 L / 14.5 gal | 60.5 × 39 × 38.5 cm — 23.8 × 15.4 × 15.2 in |
+| Large | 100 L / 26.4 gal | 75.5 × 51 × 36.5 cm — 29.7 × 20.1 × 14.4 in |
+| X-Large | 150 L / 39.6 gal | 92 × 52 × 42 cm — 36.2 × 20.5 × 16.5 in |
+
+These replaced a single invented "27 gallon / 400 lb stack capacity" spec sheet.
 
 ## Assets
 
