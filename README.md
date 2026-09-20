@@ -1,10 +1,10 @@
-# Titan Move & Tote Co.
+# Hughes Move & Tote Co
 
 Single-page marketing site for a local moving company: box-truck moving crews plus
 reusable stackable tote rentals. Dark industrial look — hazard-stripe accents,
 Oswald / Chakra Petch type, yellow-on-near-black palette.
 
-**Live:** https://jhughes281.github.io/titan-move-tote/
+**Live:** https://jhughes281.github.io/hughes-move-tote/
 
 ## Sections
 
@@ -35,10 +35,10 @@ All page JS is inline at the bottom of `index.html` (calculator, modal, FAQ, toa
 ## Local preview
 
 ```
-py -m http.server 8756 --directory C:/Users/JayHu/Sites/titan-move-tote
+py -m http.server 8756 --directory C:/Users/JayHu/Sites/hughes-move-tote
 ```
 
-Then open http://localhost:8756 — or use the `titan-move-tote` entry in `~/.claude/launch.json`.
+Then open http://localhost:8756 — or use the `hughes-move-tote` entry in `~/.claude/launch.json`.
 
 ## Deploy
 
@@ -49,7 +49,7 @@ GitHub Pages, `main` branch, `/ (root)`. Push to `main` and it redeploys.
 Everything below is invented sample copy, not real business data:
 
 - **Phone** `(555) 848-2668` — appears as display text and in the `tel:` link
-- **Email** `dispatch@titanmovetote.com`
+- **Email** `dispatch@hughesmovetote.com`
 - **Address** `400 Industrial Parkway, Bay 4`
 - **Service areas** "Metro Central, Suburbs, North District, Riverfront Corridor (45 Mile Max Radius)"
 - **Hours** Mon–Sun 7:00 AM – 8:00 PM
