@@ -15,6 +15,7 @@ Oswald / Chakra Petch type, yellow-on-near-black palette.
 | `#fleet` | Box truck lineup and capacity |
 | `#tote-rentals` | Tote specs, clothes-bag add-on (`#clothes-totes`) |
 | `#how-it-works` | Drop-off → pack → move → pickup steps |
+| `#keep-totes` | Keep totes after the move + garage storage install |
 | `#tote-calculator` | Two-tab estimator — tote rental, or full move with totes added |
 | `#pricing` | The two service tiers |
 | (FAQ) | Accordion |
@@ -97,6 +98,23 @@ const RATES = {
 booked with the moving crew. Same price whichever of the four sizes you take. Everything marked
 PLACEHOLDER still needs a real number.
 
+## Keep Your Totes (garage storage)
+
+An after-the-move upsell: the customer keeps however many totes they want instead of returning
+them all, and we install garage storage built around those totes. Two forms:
+
+- **Overhead rails** — steel rails into the ceiling joists; the tote lips slide in so bins hang
+  above the cars.
+- **Shelving units** — freestanding steel racks with shelf heights set to the tote sizes kept.
+
+Reachable from the nav, the footer, FAQ, step 3 of How It Works, and a "Keep Totes + Garage
+Storage Install" option in the booking modal.
+
+**No pricing yet.** The section says it is quoted per tote kept plus the rails or shelving, and
+the CTA opens the booking modal instead of showing a number. Nobody has given a price for
+buying a tote outright, per-rail, per-shelving-unit, or install labour — the calculator does not
+cover this service at all. Supply those and it can be priced properly.
+
 ## The two tiers
 
 1. **Totes Only** — customer moves themselves, we drop off and collect. Totes at the higher rate.
@@ -132,6 +150,15 @@ Photos of the real equipment, supplied by the owner:
 | `clothes-bag-green.png` | Green woven zip-top bag | Clothes |
 | `clothes-bag-blue.png` | Blue woven zip-top bag | Clothes |
 | `wardrobe-box.png` | Cardboard wardrobe box, hanging bar | Clothes that stay on hangers |
+| `storage-shelving.jpg` | Wire shelving in a garage holding the totes | Keep Your Totes |
+| `storage-overhead-rails.jpg` | Totes mounted overhead on rails | Keep Your Totes |
+| `storage-overhead-loaded.jpg` | Overhead totes holding gear | Keep Your Totes |
 
 The hero card has a four-way switcher (`showGear()`) that swaps between them. These replaced
 a stock render that was hot-linked from the generator's CDN and had "YOUR LOGO" printed on it.
+
+**The three `storage-*.jpg` files are third-party product photography**, screenshotted from a
+supplier's listing (the overhead rail system is Koova's). Marketplace UI — favourite and zoom
+icons, photo-count and SKU badges — was painted out, but that does not make them ours to
+publish. Replace them with our own photos of an actual install, or get written permission from
+the supplier, before this service is promoted anywhere.
