@@ -157,8 +157,12 @@ Photos of the real equipment, supplied by the owner:
 The hero card has a four-way switcher (`showGear()`) that swaps between them. These replaced
 a stock render that was hot-linked from the generator's CDN and had "YOUR LOGO" printed on it.
 
-**The three `storage-*.jpg` files are third-party product photography**, screenshotted from a
-supplier's listing (the overhead rail system is Koova's). Marketplace UI — favourite and zoom
-icons, photo-count and SKU badges — was painted out, but that does not make them ours to
-publish. Replace them with our own photos of an actual install, or get written permission from
-the supplier, before this service is promoted anywhere.
+**The three `storage-*.jpg` files are the vendor's product photography**, taken from the website
+of the supplier we buy the hardware from (the overhead rail system is Koova's). Listing UI —
+favourite and zoom icons, photo-count and SKU badges — was painted out, and the one shot with
+the vendor logo on the product was dropped, so nothing live carries their branding.
+
+Being on the vendor's site is not a licence, though. **Ask them for written permission or a
+dealer/media asset pack** — installers using a manufacturer's imagery is the normal case and
+usually granted, often with better files than these. Swap in photos of a real install as soon as
+there is one.
