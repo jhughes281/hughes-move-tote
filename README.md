@@ -33,6 +33,25 @@ Plain static HTML — no build step, no dependencies to install. Loaded from CDN
 
 All page JS is inline at the bottom of `index.html` (calculator, modal, FAQ, toast, mobile nav).
 
+## Mobile
+
+Audited at 375 / 768 / 1440 on 21 Sep 2026. No horizontal scroll at any width.
+
+- **Tap targets** — 45 of 46 interactive elements are 44px or larger. The exception is a link
+  inside a sentence in How It Works step 3; padding it to 44px would break the paragraph, and
+  inline prose links are not controls. `.tap` and `.tap-icon` in the `<style>` block enforce the
+  minimum; use them on any new link or button.
+- **Range sliders** are custom-styled (`input[type=range].slider`): a 10px track with a 28px
+  thumb inside a 44px hit area. The stock Tailwind sliders were 10px tall and unusable by thumb.
+- **`prefers-reduced-motion`** is honoured — animations and smooth scrolling are cut.
+- **Slider headers** stack under 640px; label and count collided on one line at 375.
+- The decorative blur in the tote spec card sits at `right-0`, not `-right-12`. It escaped its
+  clipping parent and put ~11px of sideways scroll on tablet. **Do not fix that class of bug with
+  `overflow-x: hidden` on `html`** — the header is `position: sticky` and it would break.
+
+Known and deliberate: roughly 25 elements use 10–11px text, mostly mono spec detail (tote
+dimensions, captions). Legible but small; worth revisiting if anyone complains.
+
 ## Local preview
 
 ```
