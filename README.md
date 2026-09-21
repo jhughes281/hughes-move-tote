@@ -87,33 +87,53 @@ number in `RATES` and the tier cards, the body copy and the estimates all follow
 
 ```js
 const RATES = {
-  totePerWeek: { rentalOnly: 2.50, withMove: 1.50 },
-  bagPerWeek:       4.00,                           // PLACEHOLDER
-  truckHourly:      { '26ft': 140, '16ft': 110 },   // PLACEHOLDER
-  extraMoverHourly: 45                              // PLACEHOLDER
+  toteTiers: [                        // standalone rental, per tote per week
+    { min: 40, rate: 2.25 },
+    { min: 20, rate: 2.75 },
+    { min: 0,  rate: 3.50 }
+  ],
+  toteWithMove:     1.50,             // per tote per week, booked with the crew
+  toteMinimum:      99.00,            // floor on a rental-only order
+  toteKeepPrice:    35.00,            // buy a tote outright after the move
+  bagPerWeek:       3.00,
+  bagWithMove:      2.00,
+  wardrobePerMove:  8.00,
+  truckHourly:      { '26ft': 129, '16ft': 109 },   // includes 2 movers
+  extraMoverHourly: 45,
+  tripFee:          95.00,
+  minimumHours:     2
 };
 ```
 
-**Real (owner-supplied):** totes are **$2.50/tote/week** on their own, **$1.50/tote/week** when
-booked with the moving crew. Same price whichever of the four sizes you take. Everything marked
-PLACEHOLDER still needs a real number.
+### Why these numbers
 
-## Keep Your Totes (garage storage)
+Set Sept 2026 against Houston market data and the owner's real cost: **totes land at about $16
+each** (100 for ~$1,600 delivered), so every tier repays a tote within a handful of rentals and
+then runs at high margin for years.
 
-An after-the-move upsell: the customer keeps however many totes they want instead of returning
-them all, and we install garage storage built around those totes. Two forms:
+**Tote rates are tiered because a small order costs the same two round trips as a big one.** A
+flat rate priced the small jobs below cost and the big jobs above the competition — Houston
+rivals (Stack, HiveBoxx, Rentacrate) sell home-size packages whose curve is much flatter than a
+linear per-tote rate. The tiers plus the $99 minimum keep every size roughly 5–35% under Stack's
+package while covering the drive.
 
-- **Overhead rails** — steel rails into the ceiling joists; the tote lips slide in so bins hang
-  above the cars.
-- **Shelving units** — freestanding steel racks with shelf heights set to the tote sizes kept.
+**The hourly rate came down and a trip fee went on.** Houston's going rate for two movers and a
+truck is roughly $90–135/hr, and local firms add an $80–175 trip fee. The old $140/hr sat above
+the band with no fee — the worst of both, since the headline rate is what customers compare.
+$129/hr plus a $95 trip fee nets more on a 4-hour job ($611 vs $560) while advertising less.
 
-Reachable from the nav, the footer, FAQ, step 3 of How It Works, and a "Keep Totes + Garage
-Storage Install" option in the booking modal.
+**`toteWithMove` at $1.50 is close to break-even** once handling is counted — it is a hook to win
+the move, not a profit line. Raise it to ~$1.75 if it should contribute.
 
-**No pricing yet.** The section says it is quoted per tote kept plus the rails or shelving, and
-the CTA opens the booking modal instead of showing a number. Nobody has given a price for
-buying a tote outright, per-rail, per-shelving-unit, or install labour — the calculator does not
-cover this service at all. Supply those and it can be priced properly.
+**`toteKeepPrice` is $35, not the ~$20 first suggested.** A tote in rotation earns roughly $37 a
+year; selling at $20 would net about $4 and kill the recurring income.
+
+### Still needed
+
+Loaded labour cost per mover-hour (wage plus payroll tax, insurance, comp) and the monthly truck
+and insurance cost. Those give a true break-even hourly rate and firm up the per-rental handling
+cost, currently assumed at $1.00–1.50 per tote. **Rails and shelving for the Keep Your Totes
+service are still unpriced** — quote-only on the page.
 
 ## The two tiers
 

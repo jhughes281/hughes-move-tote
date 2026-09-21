@@ -464,6 +464,9 @@
               <li class="flex items-center gap-2">
                 <i class="fa-solid fa-check text-brand-yellow"></i> Folds flat for compact storage
               </li>
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-brand-yellow"></i> <span>Wardrobe boxes $<span data-rate="wardrobePerMove"></span> each per move</span>
+              </li>
             </ul>
 
             <!-- Photos of the actual bags -->
@@ -913,7 +916,7 @@
               <span class="text-[11px] text-gray-400">The ones you already packed</span>
             </div>
             <div class="p-3 rounded-lg bg-gray-900 border border-gray-800">
-              <span class="block font-oswald text-sm uppercase text-white font-bold">Keep any number</span>
+              <span class="block font-oswald text-sm uppercase text-white font-bold">$<span data-rate="toteKeepPrice"></span> a tote</span>
               <span class="text-[11px] text-gray-400">Return the rest as normal</span>
             </div>
             <div class="p-3 rounded-lg bg-gray-900 border border-gray-800">
@@ -925,9 +928,11 @@
 
         <div class="bg-gray-900 border border-brand-yellow/40 rounded-xl p-6 text-center">
           <img src="assets/storage-overhead-loaded.jpg" alt="Overhead-mounted totes holding sports gear, tools, hoses and camping equipment" class="w-full max-h-28 object-contain rounded mb-3" loading="lazy">
+          <div class="font-tech text-4xl font-black text-brand-yellow leading-none">$<span data-rate="toteKeepPrice"></span></div>
+          <div class="text-[11px] text-gray-400 font-mono mb-3">per tote you keep</div>
           <p class="text-xs text-gray-300 mb-4">
-            Priced per tote kept, plus the rails or shelving you need. Tell us what you want to hang on
-            to and we'll quote it alongside your move.
+            Rails and shelving are quoted on top, once we've seen the space. Tell us what you want to
+            hang on to and we'll price it alongside your move.
           </p>
           <button onclick="openBookingModal()" class="w-full bg-brand-yellow hover:bg-yellow-400 text-black py-3.5 rounded-lg font-oswald text-sm font-bold uppercase tracking-wider transition-colors">
             Ask About Keeping Totes
@@ -1023,8 +1028,8 @@
                   <span>Max: 100+</span>
                 </div>
                 <p class="text-xs text-gray-400 mt-2">
-                  <span class="text-white font-bold">$<span data-rate="toteRentalOnly"></span> / tote per week</span> &mdash; rental only.
-                  Any of the four sizes, same price.
+                  <span class="text-white font-bold">$<span id="toteRateDisplay">2.75</span> / tote per week</span> at this quantity.
+                  Any of the four sizes, same price. $<span data-rate="toteMinimum"></span> minimum per order.
                 </p>
                 <p class="text-[11px] text-emerald-400 mt-1">
                   <i class="fa-solid fa-arrow-down"></i>
@@ -1056,7 +1061,7 @@
                   <span>10</span>
                   <span>Max: 20</span>
                 </div>
-                <p class="text-xs text-gray-400 mt-2">$4.00 / bag per week (Holds ~30 garments each)</p>
+                <p class="text-xs text-gray-400 mt-2">$<span data-rate="bagPerWeek"></span> / bag per week &mdash; $<span data-rate="bagWithMove"></span> when booked with the move</p>
               </div>
 
             </div>
@@ -1107,14 +1112,14 @@
                     <input type="radio" name="truckChoice" value="26ft" checked onchange="updateTruckPrice()" class="accent-yellow-400 mr-3">
                     <div>
                       <div class="font-oswald text-base font-bold text-white uppercase">26-Foot Box Truck + Liftgate</div>
-                      <div class="text-xs text-gray-400">For 3-5 Bedroom Homes / Large Offices ($140/hr with 2 Movers)</div>
+                      <div class="text-xs text-gray-400">For 3-5 Bedroom Homes / Large Offices ($<span data-rate="truck26"></span>/hr with 2 movers)</div>
                     </div>
                   </label>
                   <label class="flex items-center p-4 rounded-xl bg-gray-800 border border-gray-700 hover:border-brand-yellow cursor-pointer">
                     <input type="radio" name="truckChoice" value="16ft" onchange="updateTruckPrice()" class="accent-yellow-400 mr-3">
                     <div>
                       <div class="font-oswald text-base font-bold text-white uppercase">16-Foot Box Truck + Ramp</div>
-                      <div class="text-xs text-gray-400">For 1-2 Bedroom / City Condos ($110/hr with 2 Movers)</div>
+                      <div class="text-xs text-gray-400">For 1-2 Bedroom / City Condos ($<span data-rate="truck16"></span>/hr with 2 movers)</div>
                     </div>
                   </label>
                 </div>
@@ -1152,8 +1157,7 @@
                   <span class="font-oswald text-base font-bold text-white uppercase block">Add totes to this move</span>
                   <span class="text-xs text-gray-300">
                     $<span data-rate="toteWithMove"></span> / tote per week instead of
-                    $<span data-rate="toteRentalOnly"></span> &mdash; you save
-                    $<span data-rate="toteSaving"></span> per tote, per week.
+                    $<span data-rate="toteTier2"></span> &mdash; the lowest tote rate we do.
                   </span>
                 </span>
               </label>
@@ -1232,9 +1236,15 @@
             <p class="text-xs text-gray-400 mb-6">You do the move &mdash; yourself, a U-Haul, or another mover. We just supply the boxes that don't fall apart.</p>
 
             <div class="font-tech text-5xl font-black text-white mb-1">
-              $<span data-rate="toteRentalOnly"></span>
+              $<span data-rate="toteTier3"></span><span class="text-2xl text-gray-400">&ndash;</span>$<span data-rate="toteTier1"></span>
             </div>
-            <div class="text-xs text-gray-400 font-mono mb-6">per tote, per week</div>
+            <div class="text-xs text-gray-400 font-mono mb-4">per tote, per week &mdash; the more you take, the lower the rate</div>
+
+            <ul class="text-[11px] font-mono text-gray-300 border border-gray-700 rounded-lg divide-y divide-gray-700 mb-6">
+              <li class="flex justify-between px-3 py-2"><span>1&ndash;19 totes</span><span class="text-white font-bold">$<span data-rate="toteTier1"></span>/wk</span></li>
+              <li class="flex justify-between px-3 py-2"><span>20&ndash;39 totes</span><span class="text-white font-bold">$<span data-rate="toteTier2"></span>/wk</span></li>
+              <li class="flex justify-between px-3 py-2"><span>40+ totes</span><span class="text-white font-bold">$<span data-rate="toteTier3"></span>/wk</span></li>
+            </ul>
 
             <ul class="space-y-3 text-xs text-gray-300">
               <li class="flex items-start gap-2"><i class="fa-solid fa-box text-brand-yellow mt-0.5"></i> Any of the four tote sizes, one price</li>
@@ -1242,6 +1252,7 @@
               <li class="flex items-start gap-2"><i class="fa-solid fa-truck-ramp-box text-brand-yellow mt-0.5"></i> We drop off before the move and collect after</li>
               <li class="flex items-start gap-2"><i class="fa-solid fa-dolly text-brand-yellow mt-0.5"></i> Dolly, labels and zip ties included</li>
               <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-brand-yellow mt-0.5"></i> Local radius only</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-receipt text-brand-yellow mt-0.5"></i> <span>$<span data-rate="toteMinimum"></span> minimum per order</span></li>
             </ul>
           </div>
           <button onclick="switchCalcTab('totes'); scrollToCalculator();" class="mt-8 w-full py-3.5 bg-gray-800 hover:bg-gray-700 text-white font-oswald text-sm font-bold uppercase rounded transition-colors">
@@ -1260,14 +1271,15 @@
 
             <div class="flex items-baseline gap-3 mb-1">
               <span class="font-tech text-5xl font-black text-brand-yellow">$<span data-rate="toteWithMove"></span></span>
-              <span class="font-tech text-2xl font-bold text-gray-500 line-through">$<span data-rate="toteRentalOnly"></span></span>
+              <span class="font-tech text-2xl font-bold text-gray-500 line-through">$<span data-rate="toteTier2"></span></span>
             </div>
             <div class="text-xs text-gray-300 font-mono mb-6">per tote, per week &mdash; plus the hourly move</div>
 
             <ul class="space-y-3 text-xs text-gray-200">
-              <li class="flex items-start gap-2"><i class="fa-solid fa-tags text-brand-yellow mt-0.5"></i> <strong>$<span data-rate="toteSaving"></span> off every tote, every week</strong></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-tags text-brand-yellow mt-0.5"></i> <strong>Our lowest tote rate, any quantity &mdash; no minimum</strong></li>
               <li class="flex items-start gap-2"><i class="fa-solid fa-truck-moving text-brand-yellow mt-0.5"></i> 16ft or 26ft box truck with a trained crew</li>
-              <li class="flex items-start gap-2"><i class="fa-solid fa-clock text-brand-yellow mt-0.5"></i> Move billed by the hour &mdash; price it in the calculator</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-clock text-brand-yellow mt-0.5"></i> <span>From $<span data-rate="truck16"></span>/hr with two movers, <span data-rate="minimumHours"></span>-hour minimum</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-route text-brand-yellow mt-0.5"></i> <span>$<span data-rate="tripFee"></span> trip fee covers the drive both ways</span></li>
               <li class="flex items-start gap-2"><i class="fa-solid fa-boxes-packing text-brand-yellow mt-0.5"></i> Totes dropped off ahead so you pack on your schedule</li>
               <li class="flex items-start gap-2"><i class="fa-solid fa-couch text-brand-yellow mt-0.5"></i> Furniture pads and straps on the truck</li>
             </ul>
@@ -1640,25 +1652,65 @@
        Change a number here and the copy, the tier cards and the calculator
        all follow. Anything marked PLACEHOLDER still needs a real figure.
        ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------
+       RATES — single source of truth for every price on this page.
+       Change a number here and the copy, the tier cards and both
+       calculator tabs all follow.
+
+       Tote tiers reflect the real cost shape: a small order costs the
+       same two round trips as a big one, so the per-tote rate falls as
+       the count rises. Landed tote cost is about $16 (100 for ~$1,600
+       delivered), so every tier below repays a tote in a handful of
+       rentals.
+       ------------------------------------------------------------------ */
     const RATES = {
-      totePerWeek: {
-        rentalOnly: 2.50,   // totes without the moving service
-        withMove:   1.50    // totes booked together with the crew + truck
-      },
-      bagPerWeek:       4.00,              // PLACEHOLDER — clothes bags / wardrobe boxes
-      truckHourly:      { '26ft': 140, '16ft': 110 },  // PLACEHOLDER — hourly, includes 2 movers
-      extraMoverHourly: 45                 // PLACEHOLDER — per mover beyond 2, per hour
+      // Standalone rental, per tote per week — first matching tier wins.
+      toteTiers: [
+        { min: 40, rate: 2.25, label: '40+ totes'    },
+        { min: 20, rate: 2.75, label: '20-39 totes'  },
+        { min: 0,  rate: 3.50, label: '1-19 totes'   }
+      ],
+      toteWithMove:     1.50,   // per tote per week when booked with the crew
+      toteMinimum:      99.00,  // floor on a rental-only order, covers drop-off + pickup
+      toteKeepPrice:    35.00,  // buy a tote outright after the move
+
+      bagPerWeek:       3.00,   // clothes bag, rental only
+      bagWithMove:      2.00,   // clothes bag, booked with the move
+      wardrobePerMove:  8.00,   // wardrobe box, charged per move (cardboard, wears out)
+
+      truckHourly:      { '26ft': 129, '16ft': 109 },  // includes 2 movers
+      extraMoverHourly: 45,     // per mover beyond 2, per hour
+      tripFee:          95.00,  // flat, covers the drive both ways
+      minimumHours:     2
     };
 
     const money = n => (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
 
+    // Standalone per-tote rate for a given count.
+    function toteRateFor(count) {
+      return RATES.toteTiers.find(t => count >= t.min).rate;
+    }
+
     // Paint the rates into any element tagged with data-rate
     function renderRates() {
+      const lowest  = RATES.toteTiers[0].rate;
+      const highest = RATES.toteTiers[RATES.toteTiers.length - 1].rate;
       const values = {
-        toteRentalOnly: money(RATES.totePerWeek.rentalOnly),
-        toteWithMove:   money(RATES.totePerWeek.withMove),
-        toteSaving:     money(RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove),
-        bagPerWeek:     money(RATES.bagPerWeek)
+        toteFrom:       money(lowest),
+        toteSmall:      money(highest),
+        toteTier1:      money(RATES.toteTiers[2].rate),
+        toteTier2:      money(RATES.toteTiers[1].rate),
+        toteTier3:      money(RATES.toteTiers[0].rate),
+        toteWithMove:   money(RATES.toteWithMove),
+        toteMinimum:    money(RATES.toteMinimum),
+        toteKeepPrice:  money(RATES.toteKeepPrice),
+        bagPerWeek:     money(RATES.bagPerWeek),
+        bagWithMove:    money(RATES.bagWithMove),
+        wardrobePerMove:money(RATES.wardrobePerMove),
+        truck16:        money(RATES.truckHourly['16ft']),
+        truck26:        money(RATES.truckHourly['26ft']),
+        tripFee:        money(RATES.tripFee),
+        minimumHours:   String(RATES.minimumHours)
       };
       document.querySelectorAll('[data-rate]').forEach(el => {
         const v = values[el.dataset.rate];
@@ -1722,22 +1774,33 @@
       document.getElementById('toteCountDisplay').textContent = `${totes} Totes`;
       document.getElementById('bagCountDisplay').textContent = `${bags} Bags`;
 
-      // Rental-only tier: the higher tote rate applies.
-      const subtotal = (totes * RATES.totePerWeek.rentalOnly * weeks)
-                     + (bags  * RATES.bagPerWeek            * weeks);
+      // Rental only: rate steps down as the tote count rises.
+      const rate = toteRateFor(totes);
+      const raw  = (totes * rate               * weeks)
+                 + (bags  * RATES.bagPerWeek   * weeks);
+      const subtotal = Math.max(raw, RATES.toteMinimum);
+      const minApplied = subtotal > raw;
 
-      // What the same totes would cost if they booked the move as well.
-      const couldSave = totes * (RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove) * weeks;
+      // Live rate readout under the tote slider
+      const rateEl = document.getElementById('toteRateDisplay');
+      if (rateEl) rateEl.textContent = money(rate);
 
       document.getElementById('calculatedTotalDisplay').textContent = `$${subtotal.toFixed(2)}`;
       document.getElementById('calculatedSubtitleDisplay').textContent =
-        `for ${weeks} week${weeks > 1 ? 's' : ''} (${totes} totes, ${bags} bags) — rental only`;
+        `for ${weeks} week${weeks > 1 ? 's' : ''} (${totes} totes at $${money(rate)}/wk, ${bags} bags)`
+        + (minApplied ? ` — $${money(RATES.toteMinimum)} minimum applied` : '');
 
       const note = document.getElementById('calcCrossSell');
       if (note) {
-        note.innerHTML = `<i class="fa-solid fa-arrow-down"></i> Book the moving crew too and these totes drop to `
-          + `$${(totes * RATES.totePerWeek.withMove * weeks).toFixed(2)} — you'd save $${couldSave.toFixed(2)}.`;
-        note.classList.remove('hidden');
+        const withMove  = (totes * RATES.toteWithMove * weeks) + (bags * RATES.bagWithMove * weeks);
+        const couldSave = raw - withMove;
+        if (couldSave > 0) {
+          note.innerHTML = `<i class="fa-solid fa-arrow-down"></i> Book the moving crew too and the same gear drops to `
+            + `$${withMove.toFixed(2)} — you'd save $${couldSave.toFixed(2)}.`;
+          note.classList.remove('hidden');
+        } else {
+          note.classList.add('hidden');
+        }
       }
     }
 
@@ -1752,9 +1815,10 @@
       let hourlyRate = RATES.truckHourly[truckType];
       if (movers > 2) hourlyRate += (movers - 2) * RATES.extraMoverHourly;
 
-      const moveCost  = hourlyRate * hours;
-      const toteAddon = bundleTotes ? bundleCount * RATES.totePerWeek.withMove * bundleWeeks : 0;
-      const grandTotal = moveCost + toteAddon;
+      const billedHours = Math.max(hours, RATES.minimumHours);
+      const moveCost  = hourlyRate * billedHours;
+      const toteAddon = bundleTotes ? bundleCount * RATES.toteWithMove * bundleWeeks : 0;
+      const grandTotal = moveCost + RATES.tripFee + toteAddon;
 
       document.getElementById('bundleToteControls').classList.toggle('opacity-40', !bundleTotes);
       document.getElementById('bundleToteCount').disabled = !bundleTotes;
@@ -1762,15 +1826,16 @@
 
       document.getElementById('calculatedTotalDisplay').textContent = `$${grandTotal.toFixed(2)}`;
       document.getElementById('calculatedSubtitleDisplay').textContent =
-        `for ${hours} hrs (${truckType.toUpperCase()}, ${movers} movers)`
+        `${billedHours} hrs at $${money(hourlyRate)}/hr (${truckType.toUpperCase()}, ${movers} movers) + $${money(RATES.tripFee)} trip fee`
         + (bundleTotes ? ` + ${bundleCount} totes for ${bundleWeeks} week${bundleWeeks > 1 ? 's' : ''}` : '');
 
       const note = document.getElementById('calcCrossSell');
       if (note) {
         if (bundleTotes) {
-          const saved = bundleCount * (RATES.totePerWeek.rentalOnly - RATES.totePerWeek.withMove) * bundleWeeks;
-          note.innerHTML = `<i class="fa-solid fa-check"></i> Totes at $${money(RATES.totePerWeek.withMove)}/week instead of `
-            + `$${money(RATES.totePerWeek.rentalOnly)} — $${saved.toFixed(2)} saved on this booking.`;
+          const standalone = bundleCount * toteRateFor(bundleCount) * bundleWeeks;
+          const saved = standalone - toteAddon;
+          note.innerHTML = `<i class="fa-solid fa-check"></i> Totes at $${money(RATES.toteWithMove)}/week instead of `
+            + `$${money(toteRateFor(bundleCount))} — $${saved.toFixed(2)} saved on this booking.`;
           note.classList.remove('hidden');
         } else {
           note.classList.add('hidden');
