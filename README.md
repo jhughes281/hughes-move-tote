@@ -33,6 +33,33 @@ Plain static HTML — no build step, no dependencies to install. Loaded from CDN
 
 All page JS is inline at the bottom of `index.html` (calculator, modal, FAQ, toast, mobile nav).
 
+## Local SEO
+
+The site is a Houston business and now says so. Before this it did not contain the word
+"Houston", "Texas" or "TX" anywhere, and the service area listed four invented place names
+("Metro Central", "Riverfront Corridor"...). Nothing local could ever have ranked.
+
+- City in the `<title>`, meta description, OG/Twitter tags, `geo.region` / `geo.placename`
+- Real service area in the footer and FAQ: Houston metro, named suburbs, 45-mile radius
+- `MovingCompany` JSON-LD with `areaServed` (12 cities), a `GeoCircle` service area and an
+  offer catalogue covering tote rental, the hourly move and the storage install
+- `robots.txt` and `sitemap.xml`
+
+**The schema has a TODO block in the source.** `telephone`, `address` and `geo` are placeholders —
+geo is Houston city centre, and there is no phone at all because the one on the page is fake.
+Google weighs NAP consistency (name / address / phone) across the site, the schema and the
+Business Profile; mismatched or invented values hurt ranking rather than help. Fill them, or drop
+`address` and run it as a service-area business, before submitting anything to Google.
+
+## Images
+
+All page images are WebP. Converting cut them **1,051 KB to 183 KB (-83%)** with no visible
+quality loss — the two big PNGs alone went 333 KB to 17 KB and 251 KB to 16 KB.
+
+`assets/og-cover.jpg` is the social card, a proper 1200x630 at 76 KB. It stays JPEG on purpose:
+some link scrapers still handle WebP poorly. It is generated, not hand-designed — swap it for a
+real one whenever there is a photo of an actual job.
+
 ## Mobile
 
 Audited at 375 / 768 / 1440 on 21 Sep 2026. No horizontal scroll at any width.

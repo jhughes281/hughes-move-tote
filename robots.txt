@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jhughes281.github.io/hughes-move-tote/sitemap.xml
