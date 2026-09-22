@@ -1021,21 +1021,29 @@
             <div>
               <label class="block text-xs font-mono uppercase text-gray-400 mb-3 font-semibold">1. Select Home Size Preset or Customize Below:</label>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <button type="button" onclick="applyPreset(15, 2, '1-Week')" class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
+                <button type="button" onclick="applyPreset(this)" aria-pressed="false"
+                        data-totes="15" data-bags="2" data-weeks="1"
+                        class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border-2 border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
                   <div class="font-oswald text-base font-bold text-white uppercase">Studio / 1-Bed</div>
-                  <div class="text-brand-yellow font-mono text-[11px]">15 Totes • 2 Garment Bags</div>
+                  <div class="text-brand-yellow font-mono text-[11px]">15 Totes • 2 Clothes Bags</div>
                 </button>
-                <button type="button" onclick="applyPreset(25, 4, '2-Weeks')" class="preset-btn active py-3 px-3 rounded-lg bg-gray-800 border-2 border-brand-yellow text-left text-xs transition-all">
+                <button type="button" onclick="applyPreset(this)" aria-pressed="false"
+                        data-totes="25" data-bags="4" data-weeks="2"
+                        class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border-2 border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
                   <div class="font-oswald text-base font-bold text-white uppercase">2-3 Bedroom</div>
-                  <div class="text-brand-yellow font-mono text-[11px]">25 Totes • 4 Garment Bags</div>
+                  <div class="text-brand-yellow font-mono text-[11px]">25 Totes • 4 Clothes Bags</div>
                 </button>
-                <button type="button" onclick="applyPreset(40, 6, '2-Weeks')" class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
+                <button type="button" onclick="applyPreset(this)" aria-pressed="false"
+                        data-totes="40" data-bags="6" data-weeks="2"
+                        class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border-2 border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
                   <div class="font-oswald text-base font-bold text-white uppercase">3-4 Bedroom</div>
-                  <div class="text-brand-yellow font-mono text-[11px]">40 Totes • 6 Garment Bags</div>
+                  <div class="text-brand-yellow font-mono text-[11px]">40 Totes • 6 Clothes Bags</div>
                 </button>
-                <button type="button" onclick="applyPreset(60, 10, '3-Weeks')" class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
+                <button type="button" onclick="applyPreset(this)" aria-pressed="false"
+                        data-totes="60" data-bags="10" data-weeks="3"
+                        class="preset-btn py-3 px-3 rounded-lg bg-gray-800 border-2 border-gray-700 hover:border-brand-yellow text-left text-xs transition-all">
                   <div class="font-oswald text-base font-bold text-white uppercase">5+ Bed / Office</div>
-                  <div class="text-brand-yellow font-mono text-[11px]">60 Totes • 10 Garment Bags</div>
+                  <div class="text-brand-yellow font-mono text-[11px]">60 Totes • 10 Clothes Bags</div>
                 </button>
               </div>
             </div>
@@ -1793,17 +1801,27 @@
       }
     }
 
-    function applyPreset(totes, bags, duration) {
-      document.getElementById('toteCountInput').value = totes;
-      document.getElementById('bagCountInput').value = bags;
-      
-      const durationSelect = document.getElementById('rentalDurationSelect');
-      if (duration === '1-Week') durationSelect.value = "1";
-      if (duration === '2-Weeks') durationSelect.value = "2";
-      if (duration === '3-Weeks') durationSelect.value = "3";
-      
+    function applyPreset(btn) {
+      document.getElementById('toteCountInput').value      = btn.dataset.totes;
+      document.getElementById('bagCountInput').value       = btn.dataset.bags;
+      document.getElementById('rentalDurationSelect').value = btn.dataset.weeks;
+
       switchCalcTab('totes');
-      updateTotePrice();
+      updateTotePrice();   // re-derives the highlight from the values above
+    }
+
+    /* Highlight whichever preset matches the current selection, and none when
+       the customer has moved a slider away from all of them. Derived from state
+       rather than set on click, so it cannot go stale. */
+    function syncPresetHighlight(totes, bags, weeks) {
+      document.querySelectorAll('.preset-btn').forEach(b => {
+        const on = +b.dataset.totes === totes
+                && +b.dataset.bags  === bags
+                && +b.dataset.weeks === weeks;
+        b.classList.toggle('border-brand-yellow', on);
+        b.classList.toggle('border-gray-700', !on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
     }
 
     function updateTotePrice() {
@@ -1813,6 +1831,7 @@
 
       document.getElementById('toteCountDisplay').textContent = `${totes} Totes`;
       document.getElementById('bagCountDisplay').textContent = `${bags} Bags`;
+      syncPresetHighlight(totes, bags, weeks);
 
       // Rental only: rate steps down as the tote count rises.
       const rate = toteRateFor(totes);
